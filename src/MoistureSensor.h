@@ -11,7 +11,7 @@ private:
 
 
 public:
-    MoistureSensor(int analogPin, int PowerPin = 4, int dry = 1023, int wet = 0);
+    MoistureSensor(int analogPin, int PowerPin = 15, int dry = 1023, int wet = 0);
 
     int readRaw() const;
     int getMoisturePercent() const;

@@ -4,7 +4,7 @@
   #include "MoistureSensor.h"
 
 #define analog_Pin 0
-#define digitalPowerPinForSensor 4
+#define digitalPowerPinForSensor 15
 #define CONNECTION_ATTEMPTS 5
 
   
@@ -25,8 +25,13 @@
   void loop() {
     
       //read from sensor
+      moistureSensor.turnOnPower();
+      delay(1000);
       int rawValue = moistureSensor.readRaw();
       int percValue = moistureSensor.getMoisturePercent();
+      //Serial.println("Wilgotnosc: ");
+      //Serial.println(percValue);
+      moistureSensor.turnOffPower();
 
       String url = serverURL + "?id=" + String(ESP.getChipId()) + "&raw=" + rawValue + "&perc=" + percValue;
 
@@ -53,8 +58,7 @@
     while(httpCode != 200 && attempt > 0);
 
     http.end();
-  
-      //ESP.deepSleep(15e6);
+    
     ESP.deepSleep(3600e6); // one hour
-  
+    
   }
